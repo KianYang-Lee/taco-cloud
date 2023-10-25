@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 
 import io.kianyanglee.tacos.domain.TacoOrder;
 
-public interface OrderRepository extends CrudRepository<TacoOrder, String> {
+public interface OrderRepository extends CrudRepository<TacoOrder, Long> {
 }
