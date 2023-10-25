@@ -31,3 +31,13 @@ $ docker run --name my-cassandra \
 # Might need to wait a while for the container to be fully up and running
 $ docker run -it --network cassandra-net --rm cassandra cqlsh my-cassandra
 ```
+
+## Developing with Mongo
+
+Run the following to spin up container for MongoDB:
+
+```sh
+docker run -p 27017:27017 -d mongo:latest
+```
+
+Skip using Flapdoodle (the embedded DB) as it is not working following instructions provided.

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import io.kianyanglee.tacos.domain.Ingredient;
 import io.kianyanglee.tacos.domain.Taco;
 import io.kianyanglee.tacos.domain.TacoOrder;
-import io.kianyanglee.tacos.domain.TacoUDT;
 import io.kianyanglee.tacos.domain.Ingredient.Type;
 import io.kianyanglee.tacos.repositories.IngredientRepository;
 import jakarta.validation.Valid;
@@ -75,7 +74,7 @@ public class DesignTacoController {
             return "design";
         }
 
-        tacoOrder.addTaco(new TacoUDT(taco));
+        tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";
     }
