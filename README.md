@@ -9,6 +9,7 @@ The following are default configurations:
 - GUI for H2 is available at path `/h2-console`
 - DB URL (for in-memory) is `jdbc:h2:mem:tacocloud` (tacocloud because we changed the name in application file, otherwise by default it uses `test`)
 - Is not neccessary to define `data.sql` and `schema.sql` explicitly as Spring Data JPA will create tables for us by default.
+- After added Spring Security, CSRF needs to be enabled and access permitted and frame disabled (or strict same origin) for devs to access the GUI
 
 ## Docker Development
 
@@ -41,3 +42,7 @@ docker run -p 27017:27017 -d mongo:latest
 ```
 
 Skip using Flapdoodle (the embedded DB) as it is not working following instructions provided.
+
+## Spring Security
+
+Add log level `DEBUG` in `application.yml` file for debugging purpose.

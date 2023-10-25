@@ -2,3 +2,8 @@ spring:
   datasource:
     generate-unique-name: false
     name: tacocloud
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
