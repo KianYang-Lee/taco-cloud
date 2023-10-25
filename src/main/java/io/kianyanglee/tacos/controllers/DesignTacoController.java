@@ -30,7 +30,6 @@ public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
 
-    @Autowired
     public DesignTacoController(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
@@ -39,6 +38,7 @@ public class DesignTacoController {
     public void addIngredientsToModel(Model model) {
         log.info("Calling addIngredientsToModel");
         Iterable<Ingredient> ingredients = ingredientRepository.findAll();
+        log.info("Ingredients are : {}", ingredients);
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
