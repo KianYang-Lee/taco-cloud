@@ -1,7 +1,8 @@
 package io.kianyanglee.tacos.repositories;
 
+import org.springframework.data.repository.CrudRepository;
+
 import io.kianyanglee.tacos.domain.TacoOrder;
 
-public interface OrderRepository {
-    TacoOrder save(TacoOrder tacoOrder);
+public interface OrderRepository extends CrudRepository<TacoOrder, Long> {
 }

@@ -6,17 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+@Table
 @Data
 public class TacoOrder implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
+    @Id
     private Long id;
 
     private Date placedAt = new Date();

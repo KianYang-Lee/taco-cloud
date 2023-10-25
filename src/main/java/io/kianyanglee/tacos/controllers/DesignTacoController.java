@@ -2,6 +2,7 @@ package io.kianyanglee.tacos.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class DesignTacoController {
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         log.info("Calling addIngredientsToModel");
-        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
@@ -68,13 +69,14 @@ public class DesignTacoController {
         if (errors.hasErrors()) {
             return "design";
         }
-        
+
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";
     }
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
-        return ingredients.stream().filter(x -> x.getType().equals(type)).collect(Collectors.toList());
+    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, Type type) {
+        return StreamSupport.stream(ingredients.spliterator(), false).filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
     }
 }
