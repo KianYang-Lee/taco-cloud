@@ -1,13 +1,12 @@
 package io.kianyanglee.tacos.controllers;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import io.kianyanglee.tacos.domain.Ingredient;
 import io.kianyanglee.tacos.domain.Taco;
 import io.kianyanglee.tacos.domain.TacoOrder;
+import io.kianyanglee.tacos.domain.TacoUDT;
 import io.kianyanglee.tacos.domain.Ingredient.Type;
 import io.kianyanglee.tacos.repositories.IngredientRepository;
 import jakarta.validation.Valid;
@@ -43,6 +43,7 @@ public class DesignTacoController {
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+            log.info("Added attribute : {}", model.getAttribute(type.toString().toLowerCase()));
         }
     }
 
@@ -67,10 +68,14 @@ public class DesignTacoController {
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
         if (errors.hasErrors()) {
+            for (ObjectError error : errors.getAllErrors()) {
+                log.error("Error is : {}", error);
+
+            }
             return "design";
         }
 
-        tacoOrder.addTaco(taco);
+        tacoOrder.addTaco(new TacoUDT(taco));
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";
     }
