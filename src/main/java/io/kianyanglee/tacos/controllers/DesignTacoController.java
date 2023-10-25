@@ -1,4 +1,4 @@
-package io.kianyanglee.tacos;
+package io.kianyanglee.tacos.controllers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -15,6 +17,7 @@ import io.kianyanglee.tacos.domain.Ingredient;
 import io.kianyanglee.tacos.domain.Taco;
 import io.kianyanglee.tacos.domain.TacoOrder;
 import io.kianyanglee.tacos.domain.Ingredient.Type;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,6 +28,7 @@ public class DesignTacoController {
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
+        log.info("Calling addIngredientsToModel");
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
                 new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
@@ -45,17 +49,31 @@ public class DesignTacoController {
 
     @ModelAttribute(name = "tacoOrder")
     public TacoOrder order() {
+        log.info("Calling order method");
         return new TacoOrder();
     }
 
     @ModelAttribute(name = "taco")
     public Taco taco() {
+        log.info("Calling taco method");
         return new Taco();
     }
 
     @GetMapping
     public String showDesignForm() {
+        log.info("Calling showDesignForm method");
         return "design";
+    }
+
+    @PostMapping
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
+        if (errors.hasErrors()) {
+            return "design";
+        }
+        
+        tacoOrder.addTaco(taco);
+        log.info("Processing taco: {}", taco);
+        return "redirect:/orders/current";
     }
 
     private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
