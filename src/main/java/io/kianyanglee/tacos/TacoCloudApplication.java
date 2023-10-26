@@ -1,14 +1,19 @@
 package io.kianyanglee.tacos;
 
+import java.util.Arrays;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import io.kianyanglee.tacos.domain.Ingredient;
+import io.kianyanglee.tacos.domain.Role;
 import io.kianyanglee.tacos.domain.User;
 import io.kianyanglee.tacos.domain.Ingredient.Type;
+import io.kianyanglee.tacos.domain.Role.RoleType;
 import io.kianyanglee.tacos.repositories.IngredientRepository;
+import io.kianyanglee.tacos.repositories.RoleRepository;
 import io.kianyanglee.tacos.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +28,7 @@ public class TacoCloudApplication {
 	@Bean
 	public ApplicationRunner dataLoader(
 			IngredientRepository ingredientRepository,
+			RoleRepository roleRepository,
 			UserRepository userRepository) {
 		log.info("Method dataLoader is called to load data for JPA");
 		return args -> {
@@ -36,7 +42,12 @@ public class TacoCloudApplication {
 			ingredientRepository.save(new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
 			ingredientRepository.save(new Ingredient("SLSA", "Salsa", Type.SAUCE));
 			ingredientRepository.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
-			userRepository.save(new User("admin", "$2a$10$5nCRcUGuTFsHPPD4JVDNfO54p2eBfSVN8pO4si3gZJzbmiB5Ssv0S", "admin", "street", "city", "MY", "43200", "0123456789"));
+			roleRepository.save(new Role(RoleType.ROLE_USER.toString()));
+			roleRepository.save(new Role(RoleType.ROLE_ADMIN.toString()));
+			Role userRole = roleRepository.findByRole(RoleType.ROLE_USER.toString());
+			Role adminRole = roleRepository.findByRole(RoleType.ROLE_ADMIN.toString());
+			userRepository.save(new User("admin", "$2a$10$5nCRcUGuTFsHPPD4JVDNfO54p2eBfSVN8pO4si3gZJzbmiB5Ssv0S",
+					"admin", "street", "city", "MY", "43200", "0123456789", Arrays.asList(userRole, adminRole)));
 		};
 	}
 }

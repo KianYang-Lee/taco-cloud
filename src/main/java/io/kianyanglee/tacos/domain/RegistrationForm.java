@@ -1,7 +1,11 @@
 package io.kianyanglee.tacos.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import io.kianyanglee.tacos.domain.Role.RoleType;
 import lombok.Data;
 
 @Data
@@ -17,9 +21,9 @@ public class RegistrationForm {
     private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder) {
-        return new User(
-                username, passwordEncoder.encode(password),
-                fullname, street, city, state, zip, phone);
+        Role role = new Role(RoleType.ROLE_USER.toString());
+        List<Role> roles = Arrays.asList(role);
+        return new User(username, password, fullname, street, city, state, zip, phone, roles);
     }
 
 }

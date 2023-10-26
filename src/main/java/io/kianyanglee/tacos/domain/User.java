@@ -1,16 +1,18 @@
 package io.kianyanglee.tacos.domain;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,9 +41,11 @@ public class User implements UserDetails {
     private final String state;
     private final String zip;
     private final String phoneNumber;
+    @OneToMany(fetch = FetchType.EAGER)
+    private final List<Role> role;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+       return role.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).toList();
     }
 
     @Override
@@ -63,5 +67,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
