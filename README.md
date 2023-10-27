@@ -46,3 +46,11 @@ Skip using Flapdoodle (the embedded DB) as it is not working following instructi
 ## Spring Security
 
 Add log level `DEBUG` in `application.yml` file for debugging purpose.
+The only port for development is 8080 since it will redirects to 8080 no matter what port you set.
+
+Reading on:
+
+### Cross-site Request Forgery (CSRF)
+
+- https://owasp.org/www-community/attacks/csrf
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html

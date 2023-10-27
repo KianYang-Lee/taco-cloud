@@ -3,9 +3,20 @@ spring:
     generate-unique-name: false
     name: tacocloud
 logging:
+  # file:
+  #   path: /var/logs
+  #   file: TacoCloud.log
   level:
     org:
       springframework:
+        root: DEBUG
         web: DEBUG
         security: DEBUG
 debug: true
+server:
+  port: 8080
+
+# Program properties
+taco:
+  orders:
+    pageSize: 10
