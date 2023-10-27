@@ -57,6 +57,7 @@ public class OrderController {
 
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+        log.info("Page size : {}", orderProps.getPageSize());
         Pageable pageable = PageRequest.of(0, orderProps.getPageSize());
         List<TacoOrder> tacoOrderList = orderRepository.findByUserOrderByPlacedAtDesc(user, pageable);
         log.info("Taco list is : {}", tacoOrderList);
