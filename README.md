@@ -2,6 +2,12 @@
 
 A sample project based on the examples in the book Spring in Action.
 
+To set which profile(s) to use for application, set environment variable like below. We can have multiple profiles active at the same time.
+
+```sh
+export SPRING_PROFILES_ACTIVE=<profile>
+```
+
 ## Development with H2 DB
 
 The following are default configurations:

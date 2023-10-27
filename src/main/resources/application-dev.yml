@@ -1,0 +1,11 @@
+logging:
+  # file:
+  #   path: /var/logs
+  #   file: TacoCloud.log
+  level:
+    org:
+      springframework:
+        root: DEBUG
+        web: DEBUG
+        security: DEBUG
+debug: true
