@@ -60,3 +60,12 @@ Reading on:
 
 - https://owasp.org/www-community/attacks/csrf
 - https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+## Rest Endpoints
+
+We can test the endpoints using `cURL`. Below are some examples:
+
+```sh
+curl "localhost:8080/data-api/tacos?size=5"
+curl "localhost:8080/data-api/tacos?size=5&page=1"
+```
