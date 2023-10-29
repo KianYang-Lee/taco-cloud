@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Renaming entity to "users" is needed as "user" is a reserved keyword in H2 DB
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
+@Slf4j
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +47,10 @@ public class User implements UserDetails {
     private final List<Role> role;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return role.stream().map(role -> new SimpleGrantedAuthority(role.getRole())).toList();
+        List<SimpleGrantedAuthority> roles = role.stream().map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .toList();
+        log.info("Roles are : {}", roles);
+        return roles;
     }
 
     @Override

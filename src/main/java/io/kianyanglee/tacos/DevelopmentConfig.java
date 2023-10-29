@@ -60,22 +60,21 @@ public class DevelopmentConfig {
             Taco taco1 = new Taco();
             taco1.setName("Carnivore");
             taco1.setIngredients(Arrays.asList(
-            flourTortilla, groundBeef, carnitas,
-            sourCream, salsa, cheddar));
+                    flourTortilla, groundBeef, carnitas,
+                    sourCream, salsa, cheddar));
             tacoRepository.save(taco1);
             Taco taco2 = new Taco();
             taco2.setName("Bovine Bounty");
             taco2.setIngredients(Arrays.asList(
-            cornTortilla, groundBeef, cheddar,
-            jack, sourCream));
+                    cornTortilla, groundBeef, cheddar,
+                    jack, sourCream));
             tacoRepository.save(taco2);
             Taco taco3 = new Taco();
             taco3.setName("Veg-Out");
             taco3.setIngredients(Arrays.asList(
-            flourTortilla, cornTortilla, dicedTomatoes,
-            lettuce, salsa));
+                    flourTortilla, cornTortilla, dicedTomatoes,
+                    lettuce, salsa));
             tacoRepository.save(taco3);
-
 
             Role userRole = new Role(RoleType.ROLE_USER.toString());
             Role adminRole = new Role(RoleType.ROLE_ADMIN.toString());

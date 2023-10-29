@@ -2,6 +2,7 @@ package io.kianyanglee.tacos;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,9 +56,11 @@ public class SecurityConfig {
                             .requestMatchers(mvc.pattern("/design"),
                                     mvc.pattern("/orders"))
                             .hasRole("USER")
+                            // .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/ingredients/**")).hasRole("USER")
+                            .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/ingredients/**")).hasRole("user")
                             .requestMatchers(mvc.pattern("/"), mvc.pattern("/**"),
                                     mvc.pattern("/**/**"))
-                            .permitAll();
+                        .permitAll();
                 })
                 .formLogin(
                         // withDefaults()
@@ -68,7 +71,8 @@ public class SecurityConfig {
                                     .defaultSuccessUrl("/design");
                         })
                 .headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()).disable())
-                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
+                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"),
+                        mvc.pattern("/api/**")));
         return http.build();
     }
 

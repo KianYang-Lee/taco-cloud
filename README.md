@@ -68,4 +68,15 @@ We can test the endpoints using `cURL`. Below are some examples:
 ```sh
 curl "localhost:8080/data-api/tacos?size=5"
 curl "localhost:8080/data-api/tacos?size=5&page=1"
+# Post request
+curl localhost:8080/ingredients \
+    -H "Content-type: application/json" \
+    -d '{"id":"FISH","name":"Stinky Fish", "type":"PROTEIN"}'
+# Delete request with Basic authentication
+curl localhost:8080/api/ingredients/1 -X DELETE  -u admin:password
+# Post request with basic authentication
+curl localhost:8080/ingredients \
+    -H "Content-type: application/json" \
+    -d '{"id":"FISH","name":"Stinky Fish", "type":"PROTEIN"}' \
+    -u admin:password
 ```
