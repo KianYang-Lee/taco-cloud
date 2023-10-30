@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.kianyanglee.tacos.domain.Ingredient;
 import io.kianyanglee.tacos.domain.Ingredient.Type;
@@ -33,7 +34,8 @@ public class DevelopmentConfig {
             RoleRepository roleRepository,
             UserRepository userRepository,
             OrderRepository orderRepository,
-            TacoRepository tacoRepository) {
+            TacoRepository tacoRepository,
+            PasswordEncoder encoder) {
         log.info("Method dataLoader is called to load data for JPA");
         return args -> {
             Ingredient flourTortilla = new Ingredient("FLTO", "Flour Tortilla", Type.WRAP);
@@ -75,13 +77,15 @@ public class DevelopmentConfig {
                     flourTortilla, cornTortilla, dicedTomatoes,
                     lettuce, salsa));
             tacoRepository.save(taco3);
-
+            
             Role userRole = new Role(RoleType.ROLE_USER.toString());
             Role adminRole = new Role(RoleType.ROLE_ADMIN.toString());
             roleRepository.save(userRole);
             roleRepository.save(adminRole);
-            User user = new User("admin", "$2a$10$5nCRcUGuTFsHPPD4JVDNfO54p2eBfSVN8pO4si3gZJzbmiB5Ssv0S",
+            User user = new User("admin", encoder.encode("password"),
                     "admin", "street", "city", "MY", "43200", "0123456789", Arrays.asList(userRole, adminRole));
+            
+                
             userRepository.save(user);
             orderRepository.save(new TacoOrder(null, new Date(), "Sanchez", "Street", "City",
                     "NZ", "45000", "371449635398431", "12/22",

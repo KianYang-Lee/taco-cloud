@@ -6,7 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-// import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,11 +56,12 @@ public class SecurityConfig {
                             .requestMatchers(mvc.pattern("/design"),
                                     mvc.pattern("/orders"))
                             .hasRole("USER")
-                            // .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/ingredients/**")).hasRole("USER")
-                            .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/ingredients/**")).hasRole("user")
+                            .requestMatchers(mvc.pattern(HttpMethod.DELETE,
+                                    "/api/ingredients/**"))
+                            .hasRole("USER")
                             .requestMatchers(mvc.pattern("/"), mvc.pattern("/**"),
                                     mvc.pattern("/**/**"))
-                        .permitAll();
+                            .permitAll();
                 })
                 .formLogin(
                         // withDefaults()
@@ -72,7 +73,8 @@ public class SecurityConfig {
                         })
                 .headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()).disable())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"),
-                        mvc.pattern("/api/**")));
+                        mvc.pattern("/api/**")))
+                .httpBasic(withDefaults());
         return http.build();
     }
 
