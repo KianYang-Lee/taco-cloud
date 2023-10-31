@@ -18,6 +18,11 @@ spring:
       exchange: tacocloud.order
       routing-key: kitchens.central
       receive-timeout: 30000
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    template:
+      default-topic: tacocloud.orders.topic
   # Setting default destination for JMS
   jms:
     template:
