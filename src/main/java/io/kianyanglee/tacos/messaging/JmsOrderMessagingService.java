@@ -1,6 +1,5 @@
 package io.kianyanglee.tacos.messaging;
 
-import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 

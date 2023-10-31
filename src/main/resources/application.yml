@@ -9,6 +9,15 @@ spring:
     broker-url: localhost:61617
     user: admin
     password: password
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: admin
+    password: password
+    template:
+      exchange: tacocloud.order
+      routing-key: kitchens.central
+      receive-timeout: 30000
   # Setting default destination for JMS
   jms:
     template:
