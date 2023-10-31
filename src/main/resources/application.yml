@@ -5,6 +5,14 @@ spring:
   datasource:
     generate-unique-name: false
     name: tacocloud
+  artemis:
+    broker-url: localhost:61617
+    user: admin
+    password: password
+  # Setting default destination for JMS
+  jms:
+    template:
+      default-destination: tacocloud.order.queue
 server:
   port: 8080
 
