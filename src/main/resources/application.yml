@@ -12,3 +12,10 @@ server:
 taco:
   orders:
     page-size: 20
+tacocloud:
+  email:
+    host: imap.tacocloud.com
+    mailbox: INBOX
+    username: taco-in-flow
+    password: password
+    poll-rate: 10000

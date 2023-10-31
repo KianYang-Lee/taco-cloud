@@ -4,6 +4,11 @@
       "name": "taco.orders.page-size",
       "type": "java.lang.Integer",
       "description": "Set the maximum number of orders to display in a list"
+    },
+    {
+      "name": "tacocloud.email",
+      "type": "io.kianyanglee.tacos.email.EmailProperties",
+      "description": "Contain email configurations for Taco Cloud application"
     }
   ]
 }
