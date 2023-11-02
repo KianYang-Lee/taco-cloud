@@ -8,7 +8,25 @@ spring:
 server:
   port: 8080
 
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      # base-path: /actuator
+      exposure:
+        include: '*'
+        exclude: heapdump, threaddump
+
 # Program properties
 taco:
   orders:
     page-size: 20
+
+# For /info endpoint of actuator
+info:
+  title: tacocloud
+  contact:
+    email: support@tacocloud.com
+    phone: 822-625-6831
